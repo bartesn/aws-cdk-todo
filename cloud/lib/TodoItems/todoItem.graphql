@@ -1,0 +1,13 @@
+extend type Query {
+    getTodoItems: [TodoItem!]!
+}
+
+extend type Mutation {
+    addTodoItem(content: String!): TodoItem
+}
+
+type TodoItem {
+    id: ID!
+    content: String!
+    completed: Boolean!
+}
