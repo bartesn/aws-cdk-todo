@@ -1,2 +1,5 @@
 type Query
 type Mutation
+type Subscription
+
+directive @aws_subscribe(mutations: [String!]!) on FIELD_DEFINITION

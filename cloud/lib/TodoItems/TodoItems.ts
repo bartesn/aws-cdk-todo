@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
-import { GraphqlApi, MappingTemplate, PrimaryKey, Values } from '@aws-cdk/aws-appsync';
+import { GraphqlApi, MappingTemplate, PrimaryKey, Values, ResolvableField, Directive } from '@aws-cdk/aws-appsync';
 
 interface TodoItemsProps {
   graphqlApi: GraphqlApi;
@@ -33,7 +33,14 @@ export class TodoItems extends cdk.Construct {
     todoItemsTableDataSource.createResolver({
       typeName: 'Mutation',
       fieldName: 'addTodoItem',
-      requestMappingTemplate: MappingTemplate.dynamoDbPutItem(PrimaryKey.partition('id').auto(), Values.projecting(id)),
+      requestMappingTemplate: MappingTemplate.dynamoDbPutItem(PrimaryKey.partition('id').auto(), Values.projecting('input')),
+      responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
+    });
+
+    todoItemsTableDataSource.createResolver({
+      typeName: 'Mutation',
+      fieldName: 'deleteTodoItem',
+      requestMappingTemplate: MappingTemplate.dynamoDbDeleteItem('id', 'id'),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     });
   }

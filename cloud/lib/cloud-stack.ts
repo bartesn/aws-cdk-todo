@@ -1,9 +1,9 @@
 import * as cdk from '@aws-cdk/core';
 import * as path from 'path';
 
-import { CDN } from './cdn';
-import { Graphql } from './Graphql';
-import { Hosting } from './hosting';
+import { CDN } from './Cdn';
+import { Graphql} from './Graphql';
+import { Hosting } from './Hosting';
 import { TodoItems } from './TodoItems';
 
 export class CloudStack extends cdk.Stack {

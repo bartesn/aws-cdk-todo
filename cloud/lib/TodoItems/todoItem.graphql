@@ -3,7 +3,20 @@ extend type Query {
 }
 
 extend type Mutation {
-    addTodoItem(content: String!): TodoItem
+    addTodoItem(input: TodoItemInput!): TodoItem
+    deleteTodoItem(id: ID!): TodoItem
+}
+
+extend type Subscription {
+    onAddTodoItem: TodoItem
+        @aws_subscribe(mutations: ["addTodoItem"])
+    onDeleteTodoItem: TodoItem
+        @aws_subscribe(mutations: ["deleteTodoItem"])
+}
+
+input TodoItemInput {
+    content: String!
+    completed: Boolean!
 }
 
 type TodoItem {
