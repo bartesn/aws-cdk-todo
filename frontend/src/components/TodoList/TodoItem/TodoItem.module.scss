@@ -1,0 +1,30 @@
+.item {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+  max-width: 400px;
+}
+
+.itemLoading {
+  opacity: 0.6;
+}
+
+.input {
+  width: 20px;
+}
+
+.content {
+  flex: 1;
+}
+
+.button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-right: 0;
+  outline: 0;
+  padding: 0;
+  width: 20px;
+}

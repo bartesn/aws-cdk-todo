@@ -1,25 +1,33 @@
-import { ApolloClient, ApolloLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client';
 
-import { createAuthLink, AUTH_TYPE } from 'aws-appsync-auth-link';
+import { AuthOptions, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 
 import awsConfig from './awsConfig';
 
-const url = awsConfig.aws_appsync_graphqlEndpoint || '';
-const region = awsConfig.aws_appsync_region || '';
-const auth = {
-  type: awsConfig.aws_appsync_authenticationType || AUTH_TYPE.API_KEY,
-  apiKey: awsConfig.aws_appsync_apiKey || '',
+const config = {
+  url: awsConfig.aws_appsync_graphqlEndpoint || '',
+  region: awsConfig.aws_appsync_region || '',
+  auth: {
+    type: awsConfig.aws_appsync_authenticationType,
+    apiKey: awsConfig.aws_appsync_apiKey,
+  } as AuthOptions,
+  disableOffline: true,
 };
 
 const link = ApolloLink.from([
-  createAuthLink({ url, region, auth: auth as any }),
-  createSubscriptionHandshakeLink({ url, region, auth: auth as any })
+  createAuthLink(config),
+  createSubscriptionHandshakeLink(config),
 ]);
 
 export function createClient(): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     link,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   });
 }

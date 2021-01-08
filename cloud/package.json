@@ -9,7 +9,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "schema": "rm -f ./lib/schema.graphql && graphql-schema-utilities --schema \"{root.graphql,./lib/**/*.graphql}\" --output ./lib/schema.graphql"
+    "schema": "rm -f ./lib/schema.graphql && graphql-schema-utilities --includeDirectives --schema \"{root.graphql,./lib/**/*.graphql}\" --output ./lib/schema.graphql"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.83.0",

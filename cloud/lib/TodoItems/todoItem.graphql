@@ -9,9 +9,10 @@ extend type Mutation {
 
 extend type Subscription {
     onAddTodoItem: TodoItem
-        @aws_subscribe(mutations: ["addTodoItem"])
+    @aws_subscribe(mutations: ["addTodoItem"])
+
     onDeleteTodoItem: TodoItem
-        @aws_subscribe(mutations: ["deleteTodoItem"])
+    @aws_subscribe(mutations: ["deleteTodoItem"])
 }
 
 input TodoItemInput {

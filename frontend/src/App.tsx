@@ -1,15 +1,19 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 
+import AddTodoItem from './components/AddTodoItem';
 import TodoList from './components/TodoList';
 
 import { createClient } from './client';
 
-function App() {
+const client = createClient();
+
+function App(): React.ReactElement {
   return (
-    <ApolloProvider client={createClient()}>
+    <ApolloProvider client={client}>
       <div className="App">
         <TodoList />
+        <AddTodoItem />
       </div>
     </ApolloProvider>
   );
