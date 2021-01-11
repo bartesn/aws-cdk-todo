@@ -1,5 +1,7 @@
 import * as cdk from '@aws-cdk/core';
+import { UserPool } from '@aws-cdk/aws-cognito';
 import {
+  AuthorizationType,
   CfnApiKey,
   FieldLogLevel,
   GraphqlApi,
@@ -8,6 +10,7 @@ import {
 
 interface GraphqlProps {
   schemaPath: string;
+  userPool: UserPool;
 }
 
 export class Graphql extends cdk.Construct {
@@ -25,6 +28,14 @@ export class Graphql extends cdk.Construct {
         filePath: props.schemaPath,
       }),
       xrayEnabled: true,
+      authorizationConfig: {
+        defaultAuthorization: {
+          authorizationType: AuthorizationType.USER_POOL,
+          userPoolConfig: {
+            userPool: props.userPool
+          }
+        }
+      }
     });
 
     const apiKey = new CfnApiKey(this, 'CfnApiKey', {
