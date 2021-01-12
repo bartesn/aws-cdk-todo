@@ -1,33 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { Auth } from 'aws-amplify';
+import Cookies from 'universal-cookie';
 
-import Root from './pages/Root';
-import SignIn from './pages/SignIn';
 import Todo from './pages/Todo';
 
-import { createClient } from './client';
+import { createClient, createLink } from './client';
 
 const client = createClient();
 
 function App(): React.ReactElement {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const cookies = new Cookies();
+
   return (
     <ApolloProvider client={client}>
-      <div className="App">
-        <Router>
-          <Switch>
-            <Route path="/sign-in">
-              <SignIn />
-            </Route>
-            <Route path="/todo-list">
-              <Todo />
-            </Route>
-            <Route path="/">
-              <Root />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
+      <AmplifyAuthenticator
+        handleAuthStateChange={async (state) => {
+          if (state === 'signedin') {
+            const session = await Auth.currentSession();
+            const token = session.getAccessToken().getJwtToken();
+            cookies.set('todo-token', token);
+
+            client.setLink(createLink(token));
+            setLoggedIn(true);
+          }
+        }}
+      >
+        <div className="App">
+          <AmplifySignOut
+            handleAuthStateChange={async (state) => {
+              if (state === 'signedout') {
+                cookies.remove('todo-token');
+              }
+            }}
+          />
+          {loggedIn && <Todo />}
+        </div>
+      </AmplifyAuthenticator>
     </ApolloProvider>
   );
 }

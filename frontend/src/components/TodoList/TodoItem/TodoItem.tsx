@@ -10,7 +10,7 @@ interface Props {
   todoItem: TodoItemInterface;
 }
 
-function TodoItem({ todoItem: { id, content, completed } }: Props): React.ReactElement {
+function TodoItem({ todoItem: { id, content } }: Props): React.ReactElement {
   const [deleteTodoItem, { loading }] = useDeleteTodoItemMutation();
 
   const onDelete = async () => {
@@ -36,7 +36,6 @@ function TodoItem({ todoItem: { id, content, completed } }: Props): React.ReactE
 
   return (
     <div className={[styles.item, loading ? styles.itemLoading : ''].join(' ')}>
-      <input className={styles.input} type="checkbox" defaultChecked={completed} />
       <div className={styles.content}>{content}</div>
       <button type="button" className={styles.button} onClick={() => onDelete()}>
         ❌

@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 
-import './index.css';
 import App from './App';
+import awsConfig from './awsConfig';
 import reportWebVitals from './reportWebVitals';
 
-import awsConfig from './awsConfig';
+import './index.css';
+
 Amplify.configure(awsConfig);
 
 ReactDOM.render(
