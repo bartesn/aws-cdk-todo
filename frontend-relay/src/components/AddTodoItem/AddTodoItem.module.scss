@@ -1,0 +1,17 @@
+.form {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+  max-width: 400px;
+  padding: 0 10px;
+}
+
+.input {
+  display: block;
+  flex: 1;
+}
+
+.button {
+  width: 50px;
+}

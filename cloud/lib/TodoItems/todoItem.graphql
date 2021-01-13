@@ -1,3 +1,14 @@
+input TodoItemInput {
+    content: String!
+    completed: Boolean!
+}
+
+type TodoItem implements Node {
+    id: ID!
+    content: String!
+    completed: Boolean!
+}
+
 extend type Query {
     getTodoItems: [TodoItem!]!
 }
@@ -13,15 +24,4 @@ extend type Subscription {
 
     onDeleteTodoItem: TodoItem
     @aws_subscribe(mutations: ["deleteTodoItem"])
-}
-
-input TodoItemInput {
-    content: String!
-    completed: Boolean!
-}
-
-type TodoItem {
-    id: ID!
-    content: String!
-    completed: Boolean!
 }

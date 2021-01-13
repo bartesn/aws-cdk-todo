@@ -1,0 +1,4 @@
+src/generated/**/*
+src/**/*.generated.tsx
+src/serviceWorker.ts
+src/**/*.test.tsx

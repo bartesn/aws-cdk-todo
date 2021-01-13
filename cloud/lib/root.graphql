@@ -1,3 +1,7 @@
+interface Node {
+    id: ID
+}
+
 type Query
 type Mutation
 type Subscription
